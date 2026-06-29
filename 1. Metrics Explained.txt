@@ -1,0 +1,55 @@
+1. Metrics Explained
+
+### 1.1 Latency (Response Time)
+
+**What it measures:** The total wall-clock time (in milliseconds) from when the request is sent to the API until the complete response is received.
+
+**Why it matters:** In real-time applications (chatbots, code assistants, search), response speed directly impacts user experience. A model that takes 60+ seconds to respond is unusable for interactive scenarios, regardless of output quality.
+
+---
+
+### 1.2 Token Usage
+
+**What it measures:** The total number of tokens consumed — combining both input tokens (the prompt) and output tokens (the model's response).
+
+**Why it matters:**
+- **Cost**: API pricing is per-token. More tokens = higher cost at scale.
+- **Context window**: Every model has a maximum context length. Token-heavy responses consume this budget faster in multi-turn conversations.
+- **Efficiency**: A model that generates concise, accurate answers with fewer tokens is more efficient than one that is verbose.
+
+---
+
+### 1.3 Relevancy Score
+
+**What it measures:** How semantically related the model's response is to the original prompt, expressed as a percentage (0–100%).
+
+**Why it matters:** A fast response is worthless if it's off-topic. Relevancy measures whether the model actually addressed the question asked, not just whether it produced fluent text.
+
+
+## 5. Conclusion
+
+### When to use an SLM (Small Language Model)
+
+| Scenario | Why SLM wins |
+|----------|--------------|
+| **Real-time applications** (chatbots, autocomplete) | Sub-second latency (avg 641ms vs 67s) |
+| **Creative writing tasks** | Higher relevancy, faster delivery |
+| **Simple Q&A and math** | Comparable accuracy at 100x speed |
+| **Code generation** | Near-identical quality, massively faster |
+| **Cost-sensitive deployments** | Fewer tokens + cheaper infrastructure |
+| **Edge/mobile deployment** | Small enough to run on consumer hardware |
+
+### When to use an LLM (Large Language Model)
+
+| Scenario | Why LLM wins |
+|----------|--------------|
+| **Complex multi-step reasoning** | Deeper chain-of-thought (Prompt 2: 84% vs 78%) |
+| **Tasks requiring extensive world knowledge** | Larger parameter count stores more facts |
+| **Conciseness is critical** | LLM produced fewer tokens on 3/5 prompts |
+| **Batch processing (latency doesn't matter)** | Quality may edge out on nuanced tasks |
+
+### Key Takeaway
+
+> **For the vast majority of practical use cases, the SLM delivered equivalent or superior relevancy at 100x lower latency and comparable token cost.** The LLM's only clear advantage was on tricky logical reasoning — and even there, the margin was small (5.5 percentage points) while costing 64x more time.
+>
+> **Recommendation:** Start with an SLM. Escalate to an LLM only when the SLM demonstrably fails on your specific task's complexity requirements.
